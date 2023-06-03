@@ -12,7 +12,7 @@
     <body>
         <div class="containear">
             <h2>Registeration Form</h2>
-            <div id="signUpForm">
+            <form id="signUpForm">
                 <input type="text"  name="firstName" placeholder="First Name..." required="required">
                 <input type="text"  name="lastName" placeholder="Last Name..." required="required">
         
@@ -25,9 +25,9 @@
                         I have an account 
                     <button class="btn" type="button" onclick="signIn()">signIn</a>
                     </div>
-                </div>
+                </form>
             
-           <div id="signInForm">
+           <form id="signInForm">
             <input id="userEmail" type="email"  name="email" placeholder="Enter Email..." required="required">
             <input id="userPw" type="password" placeholder="Enter Password" value=""/>
             <button id="login_btn"  onClick="check()"> Login</button>
@@ -37,7 +37,7 @@
         </div>
                
     
-        </div>
+        </form>
         <script src="alertify.min.js"></script>
     <script type="text/javascript" language="javascript" src="script.js"></script>
 
