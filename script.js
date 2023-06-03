@@ -37,24 +37,19 @@ function store() {
     }
     
     else{
-        console.log("pppp");
         let users=localStorage.getItem('users')
         users=JSON.parse(users)
-        console.log(users)
-        if(users==null)
-          {users=[]
-          console.log(users);}
+        if(users==null) users=[]
 
-        else {
+         
             users.forEach(user => {
                 if( user.email==email.value)
                 {
-                    flag=true
+                    alertify.alert('you logged before')
+                    return 0
                 }
         })
-        if(flag)
-        alertify.alert('you logged before')
-        else{
+        
             userName=firstName.value+ " "+lastName.value
             let newUser=
                {
@@ -64,14 +59,14 @@ function store() {
        
                }
                users.push(newUser)
+               console.log(users)
             usersJson = JSON.stringify(users);
        localStorage.setItem("users", usersJson);
-        }
         
      
     }
 } }
-}
+
 const validateForm=()=>{
     if(firstName.value=='')
     {   p.innerHTML='Enter first Name...'
