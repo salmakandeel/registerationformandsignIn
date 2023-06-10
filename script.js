@@ -7,55 +7,61 @@ var confirmPassword = document.getElementsByName('confirmPassword')[0];
 var signUpForm=document.getElementById('signUpForm')
 var signInForm=document.getElementById('signInForm')
 let p=document.createElement("p");
-
+let signUpButton=document.getElementById('rgstr_btn')
+let signInButton=document.getElementById('login_btn')
 let userName=''
-let flag
-function store() {
+let result=true
+let flag=true
+// function to signup
+signUpButton.addEventListener('click',function(event) {
+ event.preventDefault()
  let validation= validateForm()
- if(validation==false){
-   return 0
- }
- else{
+ if(validation){
+    
 
- 
+    console.log(validatePassword(password.value));
  if(!validatePassword(password.value))
     {p.classList.add('Error')
-    p.innerHTML=(' password not valid')
+    p.style.display="block"
+    p.innerHTML=' password must be at least 8 character '
     password.after(p)
-    return 0}
-     if(password.value!=confirmPassword.value){
+    console.log(validatePassword(password.value))
+    return(0)
+}
+    if(password.value!=confirmPassword.value){
         p.classList.add('Error')
-        p.innerHTML=('confirmPassword and password not equal')
+        p.style.display="block"
+        p.innerHTML='confirmPassword and password not equal'
         confirmPassword.after(p)
-        return 0
+        return(0)
     }
+    console.log(!validateEmail(email.value));
     if(!validateEmail(email.value))
     {p.classList.add('Error')
-    p.innerHTML=('Invalid Email')
+    p.style.display="block"
+    p.innerHTML='Invalid Email'
     email.after(p)
-    return 0
+    return (0)
     }
     
     else{
-        console.log("pppp");
+        p.style.display="none"
         let users=localStorage.getItem('users')
         users=JSON.parse(users)
-        console.log(users)
-        if(users==null)
-          {users=[]
-          console.log(users);}
+        if(users==null) users=[]
 
-        else {
+         
             users.forEach(user => {
                 if( user.email==email.value)
                 {
-                    flag=true
+                    alertify.alert('you logged before')
+                    flag=false
+
                 }
         })
+        console.log(flag);
         if(flag)
-        alertify.alert('you logged before')
-        else{
-            userName=firstName.value+ " "+lastName.value
+            {userName=firstName.value+ " "+lastName.value
             let newUser=
                {
                    "name":userName,
@@ -64,74 +70,114 @@ function store() {
        
                }
                users.push(newUser)
+               console.log(users)
             usersJson = JSON.stringify(users);
-       localStorage.setItem("users", usersJson);
-        }
+       localStorage.setItem("users", usersJson);}
         
      
     }
-} }
+    // reset form
+firstName.value=''
+lastName.value=''
+email.value=''
+password.value=''
+confirmPassword.value=''
 }
+ })
+// function to validate data from fprm
 const validateForm=()=>{
+    console.log(flag);
     if(firstName.value=='')
     {   p.innerHTML='Enter first Name...'
     p.classList.add('Error')
         firstName.after(p)
-        return (false)
+        flag=false
+        
 
     }
-    if(lastName.value=='')
+    else if(lastName.value=='')
         {   p.innerHTML='Enter last Name...'
         p.classList.add('Error')
             lastName.after(p)
-            return (false)
+            flag=false
+            
         }
-         if(email.value=='')
+         else if(email.value=='')
             {   p.innerHTML='Enter email...'
             p.classList.add('Error')
                 email.after(p)
-                return (false)
+                flag=false
+        
             } 
         
-         if(password.value=='')
+         else if(password.value=='')
         {   p.innerHTML='Enter password...'
         p.classList.add('Error')
             password.after(p)
-            return (false)
+            flag=false
+       
         }
-        if(confirmPassword.value=='')
-            {   p.innerHTML='Enter confirm Password...'
+        else if(confirmPassword.value==='')
+            {  
+                p.innerHTML='Enter confirm Password...'
             p.classList.add('Error')
                 confirmPassword.after(p)
-                return (false)   
+                flag=false
             } 
-        
+        else {
+            flag=true
+            p.style.display="none"}
+            return (flag) 
 }
 // check if stored data from register-form is equal to entered data in the   login-form
-function check() {
+signInButton.addEventListener('click',function (event) {
+    event.preventDefault()
+
     let users=localStorage.getItem('users')
     users=JSON.parse(users)
-
+console.log(users);
     // entered data from the login-form
     let userEmail= document.getElementById('userEmail');
     let userPw = document.getElementById('userPw');
-users.forEach(user => {
-    if(user.pw==userPw.value && user.email==userEmail.value)
-    {
-        alertify.alert("You are logged successfully ")
-    }
-    else{
-        alertify.alert("Email or Password are not valid") 
-    }
-});}
+for (let i=0;i<users.length;i++ ) {
 
-const validateEmail=(email)=>{
-    let pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
-    return email.match(pattern)
+if(users[i].pw==userPw.value && users[i].email==userEmail.value)
+{
+    result=true 
+    userName=users[i].name
+    break
+   
 }
+  
+else 
+{
+result=false
+}
+  
+}
+if(result){
+    alertify.success("You are logged successfully")
+    document.getElementById('containearId').style.display='none'
+    document.getElementById('welcome').style.display="block" 
+    document.body.style.backgroundColor = 'rgb(255 245 245)';
+    document.getElementsByTagName('h2')[1].innerHTML =`Welcome ${userName} !!`
+}
+else alertify.error("Email or Password are Invaild")
+userEmail.value=''
+userPw.value='' 
+;}) 
+
+// function to validate email
+const validateEmail=(email)=>{
+    let pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; 
+    return pattern.test(String(email).toLowerCase());
+
+}
+// function to validate password
 const validatePassword=(pw)=>{
-    let pattern=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/gm
-    return pw.match(pattern)
+    let pattern=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm
+    // let v=pw.match(pattern)
+    return (pw.match(pattern))
 
 }
 const signIn=()=>{
