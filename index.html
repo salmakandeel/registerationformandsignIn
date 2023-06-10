@@ -10,7 +10,7 @@
 </head>
 
     <body>
-        <div class="containear">
+        <div class="containear" id="containearId">
             <h2>Registeration Form</h2>
             <form id="signUpForm">
                 <input type="text"  name="firstName" placeholder="First Name..." required="required">
@@ -20,7 +20,7 @@
                     <input  type="password"  name="password" placeholder="Password..." required="required">
                   <input  type="password"  name="confirmPassword" placeholder="Confirm Password..." required="required">
         
-                    <button id="rgstr_btn" type="submit" value="get Account" onClick="store()">Sign up </button>
+                    <button id="rgstr_btn" type="submit" value="get Account" >Sign up </button>
                     <div class="signIn">
                         I have an account 
                     <button class="btn" type="button" onclick="signIn()">signIn</a>
@@ -30,14 +30,37 @@
            <form id="signInForm">
             <input id="userEmail" type="email"  name="email" placeholder="Enter Email..." required="required">
             <input id="userPw" type="password" placeholder="Enter Password" value=""/>
-            <button id="login_btn"  onClick="check()"> Login</button>
+            <button id="login_btn" > Login</button>
             <div class="signup">
                 Create New Account <button type="button" class="btn"onclick="signUp()">signUp</a>
             </div>
-        </div>
+        </form>
                
     
-        </form>
+        </div>
+        <div id="welcome">
+        
+                <h2>
+                    Welcome 
+                </h2>
+         
+            
+            <div class="confetti">
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+            </div>
+        </div>
         <script src="alertify.min.js"></script>
     <script type="text/javascript" language="javascript" src="script.js"></script>
 
