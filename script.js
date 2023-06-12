@@ -20,10 +20,18 @@ signUpButton.addEventListener('click',function(event) {
     
 
     console.log(validatePassword(password.value));
- if(!validatePassword(password.value))
+    if(password.value.length<8)
     {p.classList.add('Error')
     p.style.display="block"
     p.innerHTML=' password must be at least 8 character '
+    password.after(p)
+    console.log(validatePassword(password.value))
+    return(0)
+}
+ if(!validatePassword(password.value))
+    {p.classList.add('Error')
+    p.style.display="block"
+    p.innerHTML=' password must contain at least one capital,small and special character '
     password.after(p)
     console.log(validatePassword(password.value))
     return(0)
@@ -159,7 +167,7 @@ if(result){
     alertify.success("You are logged successfully")
     document.getElementById('containearId').style.display='none'
     document.getElementById('welcome').style.display="block" 
-    document.body.style.backgroundColor = 'rgb(255 245 245)';
+    // document.body.style.backgroundColor = 'rgb(255 245 245)';
     document.getElementsByTagName('h2')[1].innerHTML =`Welcome ${userName} !!`
 }
 else alertify.error("Email or Password are Invaild")
@@ -168,16 +176,22 @@ userPw.value=''
 ;}) 
 
 // function to validate email
-const validateEmail=(email)=>{
-    let pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; 
-    return pattern.test(String(email).toLowerCase());
+// const validateEmail=(email)=>{
+//     let pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; 
+//     return pattern.test(String(email).toLowerCase());
 
+// }
+function validateEmail(text) { 
+    var re = /(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3}))/;
+    return re.test(text);
 }
 // function to validate password
 const validatePassword=(pw)=>{
-    let pattern=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm
+   
+
+    let pattern=/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,}$/;
     // let v=pw.match(pattern)
-    return (pw.match(pattern))
+    return (pattern.test(pw))
 
 }
 const signIn=()=>{
